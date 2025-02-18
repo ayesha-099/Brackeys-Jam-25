@@ -349,9 +349,9 @@ namespace TarodevController
         #endregion
 
         #region Horizontal
-
         private void HandleDirection()
         {
+            // Restrict movement to the X-axis only
             if (_frameInput.Move.x == 0)
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -361,7 +361,28 @@ namespace TarodevController
             {
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
             }
+
+            // Ensure Z movement is always zero
+            _frameVelocity.z = 0;
         }
+
+        // Apply movement with velocity restricted to the X-axis
+        private void ApplyMovement()
+        {
+            _rb.velocity = new Vector3(_frameVelocity.x, _frameVelocity.y, 0);
+        }
+        //private void HandleDirection()
+        //{
+        //    if (_frameInput.Move.x == 0)
+        //    {
+        //        var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
+        //        _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+        //    }
+        //    else
+        //    {
+        //        _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+        //    }
+        //}
 
         #endregion
 
@@ -383,7 +404,7 @@ namespace TarodevController
 
         #endregion
 
-        private void ApplyMovement() => _rb.velocity = _frameVelocity;
+        //private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
 #if UNITY_EDITOR
         private void OnValidate()
