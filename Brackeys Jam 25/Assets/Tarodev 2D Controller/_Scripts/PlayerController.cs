@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TarodevController
 {
-   
+
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
@@ -204,3 +204,5 @@ namespace TarodevController
         public Vector2 FrameInput { get; }
     }
 }
+
+
